@@ -18,6 +18,8 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'git@github.com:kien/ctrlp.vim.git'
 Plugin 'mbbill/undotree'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'xolox/vim-misc.git'
+Plugin 'xolox/vim-notes'
 
 call vundle#end()
 filetype plugin indent on
@@ -46,6 +48,10 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=gray13 ctermbg=4
 if executable('rg')
     let g:rg_derive_root='true'
 endif
+
+" vim-notes
+let g:notes_directories = ['~/notes']
+let g:notes_suffix = '.txt'
 
 " General rules
 set backspace=indent,eol,start
