@@ -57,7 +57,7 @@ let g:notes_suffix = '.txt'
 set backspace=indent,eol,start
 set noerrorbells
 set ruler
-set number
+set number relativenumber
 set showcmd
 set incsearch
 set hlsearch
