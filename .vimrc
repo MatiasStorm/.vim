@@ -20,9 +20,25 @@ Plugin 'mbbill/undotree'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'xolox/vim-misc.git'
 Plugin 'xolox/vim-notes'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'mattn/emmet-vim'
 
 call vundle#end()
 filetype plugin indent on
+
+" emmet
+" let g:user_emmet_leader_key=',' " Type <Space> + <,> to execute emmet
+
+"syntastic
+set statusline=[%n]\ %<%f%h%m
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers=['eslint']
 
 " Color scheme 
 set termguicolors
@@ -34,6 +50,10 @@ autocmd vimenter * colorscheme gruvbox
 " NERDtree
 let NERDTreeShowHidden=1
 map <C-n> :NERDTreeToggle<CR>
+
+" CtrlP
+let g:ctrlp_use_caching = 0
+let g:ctrlp_custom_ignore = 'node_modules'
 
 "Indent guides 
 set ts=4 sw=4 et
@@ -79,7 +99,7 @@ map K gt
 map J gT
 map <C-s> :w<CR>
 inoremap jj <ESC>
-inoremap <C-l> <Del>
+inoremap <C-l> <Right>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>h :wincmd h<CR>
@@ -91,6 +111,7 @@ nnoremap <leader>ps :Rg <CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <silent> <Leader>+ :vertical resize +5<CR>
 nnoremap <silent> <Leader>- :vertical resize -5<CR>
+nnoremap <leader>rc :<UP><CR>
 
 " Git
 nnoremap <leader>gc :Gcommit<CR>
@@ -105,3 +126,5 @@ nnoremap <silent> <Leader>gf :YcmCompleter FixIt<Cr>
 " Commands
 command Q q
 command W w
+autocmd FileType c,cpp,python,ruby,java autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd FileType c,cpp,python,ruby,java autocmd FileWritePre <buffer> :%s/\s\+$//e
