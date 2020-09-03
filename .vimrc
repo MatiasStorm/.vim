@@ -11,23 +11,40 @@ Plugin 'tpope/vim-surround.git'
 Plugin 'nathanaelkane/vim-indent-guides.git'
 Plugin 'morhetz/gruvbox.git'
 Plugin 'preservim/nerdtree.git'
-Plugin 'ycm-core/YouCompleteMe.git'
-Plugin 'jremmen/vim-ripgrep'
 Plugin 'tpope/vim-fugitive'
-Plugin 'leafgarland/typescript-vim'
+" Plugin 'leafgarland/typescript-vim'
 Plugin 'git@github.com:kien/ctrlp.vim.git'
 Plugin 'mbbill/undotree'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'xolox/vim-misc.git'
-Plugin 'xolox/vim-notes'
+Plugin 'vimwiki/vimwiki'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'mattn/emmet-vim'
+Plugin 'neoclide/coc.nvim'
 
 call vundle#end()
 filetype plugin indent on
+filetype plugin on
 
-" emmet
-" let g:user_emmet_leader_key=',' " Type <Space> + <,> to execute emmet
+" General rules
+set backspace=indent,eol,start
+set noerrorbells
+set ruler
+set number relativenumber
+set showcmd
+set incsearch
+set hlsearch
+set nrformats=
+set tabstop=4 softtabstop=4 expandtab shiftwidth=4 smarttab " 4 spaces instead of tab
+set smartindent
+set clipboard=unnamedplus
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set cursorline
+set laststatus=2
+let mapleader = " "
+syntax on
 
 "syntastic
 set statusline=[%n]\ %<%f%h%m
@@ -64,35 +81,29 @@ let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=gray13 ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=gray13 ctermbg=4
 
-" ripgrep
-if executable('rg')
-    let g:rg_derive_root='true'
+" COC
+nmap <leader>rn <Plug>(coc-rename)
+nnoremap <leader>prn :CocSearch <C-R>=expand("<cword>")<CR><CR>
+
+" GoTo code navigation.
+nmap <silent> <leader>gd <Plug>(coc-definition)
+
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <C-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
 
-" vim-notes
-let g:notes_directories = ['~/notes']
-let g:notes_suffix = '.txt'
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" General rules
-set backspace=indent,eol,start
-set noerrorbells
-set ruler
-set number relativenumber
-set showcmd
-set incsearch
-set hlsearch
-set nrformats=
-set tabstop=4 softtabstop=4 expandtab shiftwidth=4 smarttab " 4 spaces instead of tab
-set smartindent
-set clipboard=unnamedplus
-set noswapfile
-set nobackup
-set undodir=~/.vim/undodir
-set undofile
-set cursorline
-set laststatus=2
-let mapleader = " "
-syntax on
 
 " Key mappings
 map K gt
@@ -100,6 +111,8 @@ map J gT
 map <C-s> :w<CR>
 inoremap jj <ESC>
 inoremap <C-l> <Right>
+inoremap <C-a> <C-o>$
+inoremap <C-i> <C-o>0
 nnoremap <leader>q :q<CR>
 nnoremap <leader>w :w<CR>
 nnoremap <leader>h :wincmd h<CR>
@@ -111,20 +124,16 @@ nnoremap <leader>ps :Rg <CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <silent> <Leader>+ :vertical resize +5<CR>
 nnoremap <silent> <Leader>- :vertical resize -5<CR>
-nnoremap <leader>rc :<UP><CR>
+
+" COC -  User tab and S-tab to navigate the completion list (Has to be after Key mappings!!!!)
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 
 " Git
-nnoremap <leader>gc :Gcommit<CR>
-nnoremap <leader>ga :Git add .<CR>
-nnoremap <leader>gs :Git status<CR>
-nnoremap <leader>gd :Git diff<CR>
-
-" YCM
-nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
-nnoremap <silent> <Leader>gf :YcmCompleter FixIt<Cr>
 
 " Commands
 command Q q
 command W w
-autocmd FileType c,cpp,python,ruby,java autocmd BufWritePre <buffer> :%s/\s\+$//e
-autocmd FileType c,cpp,python,ruby,java autocmd FileWritePre <buffer> :%s/\s\+$//e
+autocmd FileType c,cpp,python,ruby,java,javascript autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd FileType c,cpp,python,ruby,java,javascript autocmd FileWritePre <buffer> :%s/\s\+$//e
