@@ -17,7 +17,7 @@ Plugin 'git@github.com:kien/ctrlp.vim.git'
 Plugin 'mbbill/undotree'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'vimwiki/vimwiki'
-Plugin 'vim-syntastic/syntastic'
+" Plugin 'vim-syntastic/syntastic'
 Plugin 'mattn/emmet-vim'
 Plugin 'neoclide/coc.nvim'
 
@@ -45,17 +45,6 @@ set cursorline
 set laststatus=2
 let mapleader = " "
 syntax on
-
-"syntastic
-set statusline=[%n]\ %<%f%h%m
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers=['eslint']
 
 " Color scheme 
 set termguicolors
