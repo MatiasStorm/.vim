@@ -4,24 +4,23 @@ set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/vundle/
 
-call vundle#begin()
-Plugin 'gmarik/vundle'
-Plugin 'tpope/vim-commentary.git'
-Plugin 'tpope/vim-surround.git'
-Plugin 'nathanaelkane/vim-indent-guides.git'
-Plugin 'morhetz/gruvbox.git'
-Plugin 'preservim/nerdtree.git'
-Plugin 'tpope/vim-fugitive'
-" Plugin 'leafgarland/typescript-vim'
-Plugin 'git@github.com:kien/ctrlp.vim.git'
-Plugin 'mbbill/undotree'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'vimwiki/vimwiki'
-" Plugin 'vim-syntastic/syntastic'
-Plugin 'mattn/emmet-vim'
-Plugin 'neoclide/coc.nvim'
+call plug#begin('~/.vim/plugged')
+Plug 'gmarik/vundle'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'morhetz/gruvbox'
+Plug 'preservim/nerdtree'
+Plug 'tpope/vim-fugitive'
+Plug 'mbbill/undotree'
+Plug 'jiangmiao/auto-pairs'
+Plug 'vimwiki/vimwiki'
+Plug 'mattn/emmet-vim'
+Plug 'neoclide/coc.nvim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
-call vundle#end()
+call plug#end()
 filetype plugin indent on
 filetype plugin on
 
@@ -46,6 +45,10 @@ set laststatus=2
 let mapleader = " "
 syntax on
 
+" fzf
+let g:fzf_layout = {'window': {'width': 0.8, 'height': 0.8}}
+let $FZF_DEFAULT_OPTS='--reverse'
+
 " Color scheme 
 set termguicolors
 set bg=dark
@@ -56,10 +59,6 @@ autocmd vimenter * colorscheme gruvbox
 " NERDtree
 let NERDTreeShowHidden=1
 map <C-n> :NERDTreeToggle<CR>
-
-" CtrlP
-let g:ctrlp_use_caching = 0
-let g:ctrlp_custom_ignore = 'node_modules'
 
 "Indent guides 
 set ts=4 sw=4 et
@@ -113,13 +112,16 @@ nnoremap <leader>ps :Rg <CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <silent> <Leader>+ :vertical resize +5<CR>
 nnoremap <silent> <Leader>- :vertical resize -5<CR>
-
+nnoremap <C-p> :GFiles --cached --others --exclude-standard<CR>
 " COC -  User tab and S-tab to navigate the completion list (Has to be after Key mappings!!!!)
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-
-" Git
+" Yank highligt
+augroup highlight_yank
+    autocmd!
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+augroup END
 
 " Commands
 command Q q
