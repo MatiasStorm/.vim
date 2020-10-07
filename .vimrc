@@ -19,6 +19,7 @@ Plug 'mattn/emmet-vim'
 Plug 'neoclide/coc.nvim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'OrangeT/vim-csharp'
 
 call plug#end()
 filetype plugin indent on
@@ -44,6 +45,10 @@ set cursorline
 set laststatus=2
 let mapleader = " "
 syntax on
+
+" emmet
+" Insert newlines for childless tags
+let g:user_emmet_settings = {'html': {'block_all_childless': 1,}}
 
 " fzf
 let g:fzf_layout = {'window': {'width': 0.8, 'height': 0.8}}
@@ -75,7 +80,18 @@ nnoremap <leader>prn :CocSearch <C-R>=expand("<cword>")<CR><CR>
 
 " GoTo code navigation.
 nmap <silent> <leader>gd <Plug>(coc-definition)
+nmap <silent> <leader>gr <Plug>(coc-references)
 
+" Use K to show documentation in preview window.
+nnoremap <silent> <leader>gk :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocActionAsync('doHover')
+  endif
+endfunction
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <C-space> coc#refresh()
@@ -126,5 +142,5 @@ augroup END
 " Commands
 command Q q
 command W w
-autocmd FileType c,cpp,python,ruby,java,javascript autocmd BufWritePre <buffer> :%s/\s\+$//e
-autocmd FileType c,cpp,python,ruby,java,javascript autocmd FileWritePre <buffer> :%s/\s\+$//e
+" autocmd FileType c,cpp,python,ruby,java,javascript autocmd BufWritePre <buffer> :%s/\s\+$//e
+" autocmd FileType c,cpp,python,ruby,java,javascript autocmd FileWritePre <buffer> :%s/\s\+$//e
