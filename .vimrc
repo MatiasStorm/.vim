@@ -20,6 +20,7 @@ Plug 'neoclide/coc.nvim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'OrangeT/vim-csharp'
+Plug 'andys8/vim-elm-syntax'
 
 call plug#end()
 filetype plugin indent on
@@ -128,7 +129,8 @@ nnoremap <leader>ps :Rg <CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <silent> <Leader>+ :vertical resize +5<CR>
 nnoremap <silent> <Leader>- :vertical resize -5<CR>
-nnoremap <C-p> :GFiles --cached --others --exclude-standard<CR>
+command! Ctrlp execute (len(system('git rev-parse'))) ? ':Files' : ':GFiles --cached --others --exclude-standard'
+nnoremap <C-p> :Ctrlp<CR>
 " COC -  User tab and S-tab to navigate the completion list (Has to be after Key mappings!!!!)
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -142,5 +144,6 @@ augroup END
 " Commands
 command Q q
 command W w
+command git Git
 " autocmd FileType c,cpp,python,ruby,java,javascript autocmd BufWritePre <buffer> :%s/\s\+$//e
 " autocmd FileType c,cpp,python,ruby,java,javascript autocmd FileWritePre <buffer> :%s/\s\+$//e

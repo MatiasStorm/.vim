@@ -30,6 +30,8 @@ nnoremap <space>cg :action GenerateGetter<CR>
 nnoremap <space>ca :action GenerateGetterAndSetter<CR>
 nnoremap <space>cc :action GenerateConstructor<CR>
 nnoremap <space>se :action ShowErrorDescription<CR>
+nnoremap <space>w :action SaveAll<CR>
+nnoremap <c-n> :action ActivateProjectToolWindow<CR>
 nmap <leader>q :action CloseContent<CR>
 
 " easy window navigation
@@ -45,7 +47,7 @@ nnoremap <silent> <Leader>+ :vertical resize +5<CR>
 nnoremap <silent> <Leader>- :vertical resize -5<CR>
 
 " code refactoring
-nnoremap <space>rr :action RenameElement<cr>
+nnoremap <space>rn :action RenameElement<cr>
 
 " set plugins
 set surround
