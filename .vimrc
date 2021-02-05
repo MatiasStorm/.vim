@@ -21,6 +21,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'OrangeT/vim-csharp'
 Plug 'andys8/vim-elm-syntax'
+Plug 'stevearc/vim-arduino'
 
 call plug#end()
 filetype plugin indent on
@@ -141,9 +142,11 @@ augroup highlight_yank
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
 augroup END
 
+" files
+autocmd BufNewFile,BufReadPost *.ino,*.pde set filetype=cpp
+
 " Commands
 command Q q
 command W w
-command git Git
 " autocmd FileType c,cpp,python,ruby,java,javascript autocmd BufWritePre <buffer> :%s/\s\+$//e
 " autocmd FileType c,cpp,python,ruby,java,javascript autocmd FileWritePre <buffer> :%s/\s\+$//e
