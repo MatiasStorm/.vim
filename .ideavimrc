@@ -57,3 +57,7 @@ set highlightedyank
 " code navigation
 nnoremap <space>gd :action GotoImplementation<cr>
 nnoremap <space>gt :action GotoTest<cr>
+
+" Debug
+nnoremap <space>dt :action ToggleLineBreakpoint<CR>
+nnoremap <space>ds :action Debug<CR>
